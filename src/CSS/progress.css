@@ -1,0 +1,51 @@
+.progress{
+    background-color: rgba(235, 249, 253, 0.897);
+    padding:5px 0 10px 0 ;
+    text-align: center;
+    width:500px;
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-top: 20px;
+    margin-bottom:25px;
+    border-radius: 35px;
+    height:300px;
+    box-shadow: 6px 6px 6px 6px  rgb(149, 143, 143);
+}
+.chart{
+    background-color: rgba(235, 253, 253, 0.897);
+    padding:5px 0 10px 0 ;
+    text-align: center;
+    width: 600px;
+    margin-left: 40%;
+    margin-right: 50%;
+    margin-top: 20px;
+    margin-bottom:25px;
+    border-radius: 35px;
+    height:300px;
+    box-shadow: 6px 6px 6px 6px rgb(149, 143, 143);
+}
+
+.center {
+    position: absolute;
+    top: 5%;
+    width: 30%;
+    left: -10%;
+    text-align: center;
+    font-size: 18px;
+  }
+
+.select{
+    background-color: rgba(235, 253, 253, 0.897);
+    padding:5px 0 10px 0 ;
+    border-radius: 35px;
+    color: DodgerBlue;
+}
+
+.select-selected {
+    background-color: DodgerBlue;
+  }
+ 
+.table{
+    background-color: rgba(235, 253, 253, 0.897);
+}
+

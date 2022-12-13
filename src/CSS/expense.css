@@ -1,0 +1,30 @@
+.expense{
+     max-width: 30rem;
+     margin: 2rem auto;
+     padding: 2 rem;
+     margin: auto;
+     margin-left: 5px;
+}
+.expense input-group 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.expense input{
+    height:30px;
+    width:75%;
+    border-radius:6px;
+    padding-left: 10px;
+    font-size: 110%;
+    margin-bottom:10px;
+}
+
+/* ::placeholder{
+    color:red;
+} */
+
+.expense span{
+    color: red;
+}
+

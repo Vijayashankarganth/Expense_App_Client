@@ -1,0 +1,13 @@
+.budget{
+    background-color: rgba(235, 253, 253, 0.897);
+    padding:5px 0 10px 0 ;
+    text-align: center;
+    width:75%;
+    margin-left: 25%;
+    margin-right: 0%;
+    margin-top: 20px;
+    margin-bottom:25px;
+    border-radius: 20px;
+    height:150px;
+    box-shadow: 6px 6px 6px rgb(149, 143, 143);
+}
