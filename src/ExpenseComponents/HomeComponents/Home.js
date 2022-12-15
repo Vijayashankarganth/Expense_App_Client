@@ -10,7 +10,6 @@ import '../../CSS/progress.css'
 import {Modal,Button,Input} from 'antd'
 
 
-
 const Home=(props)=>{
    
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +34,6 @@ const Home=(props)=>{
     }
  
 
-    // ---> search 
     const expenseList=useSelector((state)=>{
         return state.expense
     })
@@ -43,6 +41,7 @@ const Home=(props)=>{
         setSearchInput(e.target.value)
     }
     const searchData=expenseList.filter((ele)=>{
+        
             if(tableDisplay === 'all'){
                 return (
                     ele.title.toLowerCase().match(searchInput.toLowerCase()) ||
@@ -60,9 +59,7 @@ const Home=(props)=>{
             }
         
     })
-    //-----> search
-
-    //----->calculation
+    
     const budgetAmount=useSelector((state)=>{
         return state.budget
     })
@@ -78,18 +75,19 @@ const Home=(props)=>{
     },0)
  
     let totalBudget=Math.round(budgetAmount.budget)
-    let expensePercentage=Math.round((totalExpense/totalBudget)*100)
-    let budgetPercentage=Math.round((((totalBudget-totalExpense)/totalBudget)*100))
-    let budgetRemain=Math.round(totalBudget-totalExpense)
-    //----->calculation
 
-    // ---> select table
+    let expensePercentage=Math.round((totalExpense/totalBudget)*100)
+
+    let budgetPercentage=Math.round((((totalBudget-totalExpense)/totalBudget)*100))
+
+    let budgetRemain = Math.round(totalBudget-totalExpense)
+
+   
     const handleSelect=(e)=>{
         setTableDisplay(e.target.value)
     }
-    // ---> select table
-
-    // ---> chart- Table Calculation
+  
+   
     const category=useSelector((state)=>{
         return state.category.filter((ele)=>{
             return !ele.isDeleted
@@ -122,8 +120,6 @@ const Home=(props)=>{
             }
     })
 
-    
-    // ---> chart-Table calculation
 
 
     return (
@@ -152,7 +148,7 @@ const Home=(props)=>{
 
         <div className="row">
             <div className="col-6">
-                <Button type="primary" onClick={showModal}>ADD_EXPENSE</Button>
+                <Button type="primary" onClick={showModal} disabled={budgetRemain === 0}>ADD_EXPENSE</Button>
                 <Modal 
                     title="Add Expense" 
                     open={isModalOpen} 
@@ -181,7 +177,8 @@ const Home=(props)=>{
     
         <div >
             <br/>
-            <ExpenseTable  searchData={searchData}  budgetRemain={budgetRemain}  />
+            <ExpenseTable  searchData={searchData}  budgetRemain={budgetRemain}
+             totalBudget={totalBudget} totalExpense={totalExpense} />
         </div> 
     </div>
     )

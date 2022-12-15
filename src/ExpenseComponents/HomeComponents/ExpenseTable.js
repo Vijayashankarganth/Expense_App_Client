@@ -5,14 +5,15 @@ import { Table,Popconfirm,Form,Button,Input} from "antd";
 import swal from "sweetalert";
 const ExpenseTable=(props)=>{
     
-    const {searchData,budgetRemain} = props
+    const {searchData,budgetRemain,totalBudget,totalExpense} = props
     const dispatch=useDispatch()
     const [dataSource,setDataSourse]=useState([])
     const [category,setCategory]=useState('')
     const [editTableRow,setEditTableRow]=useState(null)
-    const [toggleSave,setToggleSave]=useState(false) // edit link to save link 
+    const [editAmount,setEditAmount]=useState(0)
+    const [toggleSave,setToggleSave]=useState(false) 
     
-    const [form]=Form.useForm() // react form hook
+    const [form]=Form.useForm() 
 
    
     const categoryList=useSelector((state)=>{
@@ -20,7 +21,7 @@ const ExpenseTable=(props)=>{
     })
 
     const toggleSaveFunction=()=>{
-        // to toggle the edit link to save link and viceversa
+      
         setToggleSave(!toggleSave)
        
     }
@@ -46,14 +47,15 @@ const ExpenseTable=(props)=>{
    
     const handleTableEdit=(record)=>{
         setEditTableRow(record.key)
-        toggleSaveFunction() // 1. edit to save 
+        setEditAmount(record.expenseAmount)
+        toggleSaveFunction() 
         form.setFieldsValue({
             categoryName:category,
             expenseName:record.expenseName,
             expenseAmount:record.expenseAmount,
             expenseDate:record.expenseDate
-        }) // to show data on edit form 
-   
+        }) 
+       
     }
     
     const handleDeleteRow=(record)=>{
@@ -63,7 +65,7 @@ const ExpenseTable=(props)=>{
     }
 
     const handleRestoreRow=(record)=>{
-        if(record.expenseAmount < budgetRemain){
+        if(record.expenseAmount <= budgetRemain){
             const id =record.key
             const action='restore'
             dispatch(startExpenseUpdate(id,action))
@@ -243,24 +245,29 @@ const ExpenseTable=(props)=>{
         }
     ]
 
-    const onFinish=(values)=>{ // to save the edited row after click save 
+    const onFinish=(values)=>{       
+       
         const id = editTableRow
         const action='update'
-        if(Number(values.expenseAmount) <= budgetRemain){
         const data={
             title:values.expenseName,
             amount:Number(values.expenseAmount),
             expenseDate:values.expenseDate.split('-').reverse().join('-'),
             categoryId:category
         }
-        dispatch(startExpenseUpdate(id,action,data))
-        setEditTableRow(null)// to toggle the edit state 
+
+        if(totalBudget - totalExpense < data.amount - editAmount){
+            swal({
+                title:"Not enough budget",
+                icon:'warning'
+            })
+        }
+        else if (totalBudget - totalExpense >= data.amount - editAmount){
+            dispatch(startExpenseUpdate(id,action,data))
+        }
+        setEditTableRow(null)
         setCategory('')
-        toggleSaveFunction() // save link to edit link
-    }
-    else{
-        swal(`${Number(values.expenseAmount)}`,'Expense Amount  Greater Than Budget Amount!!!','warning')
-    }
+        toggleSaveFunction() 
     }
     
   

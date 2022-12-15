@@ -1,32 +1,53 @@
 import React,{useState,useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { startGetBudget,startUpdateBudget } from "../../redux/actions/budgetAction";
+import { startExpenseList } from "../../redux/actions/expenseAction";
+import swal from "sweetalert";
+
 const Budget=(props)=>{
+
     const [budgetValue,setBudgetValue]=useState('')
 
     const budget=useSelector((state)=>{
         return state.budget
     })
+    
     const dispatch=useDispatch()
   
     useEffect(()=>{
         dispatch(startGetBudget())
+        dispatch(startExpenseList())
     },[dispatch])
     
-   
+    const expenseAmount=useSelector((state)=>{
+        return state.expense.filter((ele)=>{
+            return !ele.isDeleted && !ele.categoryId.isDeleted
+        })
+    })
 
+    const totalExpense=expenseAmount.reduce((pv,cv)=>{
+        return cv.isDeleted ? pv : pv+cv.amount
+    },0)
+  
     const handleBudgetChange=(e)=>{
         setBudgetValue(e.target.value)
     }
-    const prevalue=budget.budget
+
+    
     const handleSubmit=(e)=>{
         e.preventDefault()
         const budgetData={
             budget:Number(budgetValue)
         }
+        if(budgetData.budget >= totalExpense){
+            dispatch(startUpdateBudget(budgetData))
+            setBudgetValue('')
+        }else{
+            swal({
+                title:'Budget Value is Lesser Than Expense Amount',
+                icon:'warning'})
+        }
         
-        dispatch(startUpdateBudget(budgetData,prevalue))
-        setBudgetValue('')
     }
     
     return(

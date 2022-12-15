@@ -9,9 +9,9 @@ import configureStore from './redux/store/configureStore';
 
 const store = configureStore()
 
-store.subscribe(()=>{
-  console.log('store-updated',store.getState())
-})
+// store.subscribe(()=>{
+//   console.log('store-updated',store.getState())
+// })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

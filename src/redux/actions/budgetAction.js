@@ -3,8 +3,6 @@ import axios from 'axios'
 import swal from 'sweetalert'
 
 
-
-
 export const startGetBudget=()=>{
     return (dispatch)=>{
         axios.get('http://localhost:4321/api/user/budget/list',{
@@ -29,10 +27,10 @@ export const getBudget=(data)=>{
     }
 }
 
-export const startUpdateBudget=(budgetData,prevalue)=>{
+export const startUpdateBudget=(budgetData)=>{
     
     return (dispatch)=>{
-        if(budgetData.budget > prevalue){
+        
             axios.put('http://localhost:4321/api/user/budget/update',budgetData,{
                 headers:{
                     "X-Auth":localStorage.getItem('token')
@@ -45,10 +43,7 @@ export const startUpdateBudget=(budgetData,prevalue)=>{
                  .catch((error)=>{
                    swal('Oops',error.message,'error')
                  })
-        }
-        else{
-            swal('enter Higher Value')
-        }
+       
        
     }
 }

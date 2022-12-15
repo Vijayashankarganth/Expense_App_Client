@@ -32,7 +32,7 @@ const ExpenseForm=(props)=>{
         }),
         onSubmit:function(values,{resetForm}){
 
-            if(Number(values.amount) < budgetRemain){
+            if(Number(values.amount) <= budgetRemain){
             const ExpenseData={
                 title:values.title,
                 amount:Number(values.amount),

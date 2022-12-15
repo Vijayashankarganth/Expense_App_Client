@@ -25,7 +25,7 @@ export const profileList=(data)=>{
 }
 
 export const startUpdateProfile=(data,imagetoggle)=>{
-    console.log(data,'actioninput')
+   
     return (dispatch)=>{
         axios.put('http://localhost:4321/api/user/update',data,{
             headers:{
